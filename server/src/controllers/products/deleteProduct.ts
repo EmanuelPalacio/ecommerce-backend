@@ -23,7 +23,7 @@ export default function deleteProduct(req: Request, res: Response) {
 			);
 			fs.writeFileSync(
 				'src/utils/mockups/mockProducts.JSON',
-				JSON.stringify(newListProducts),
+				JSON.stringify(newListProducts, null, 2),
 			);
 			response = {
 				ok: true,
