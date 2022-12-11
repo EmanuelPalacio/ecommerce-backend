@@ -1,1 +1,1 @@
-export { default as generateID } from './generateID';
+export * from './generateID';

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Product } from '../../interfaces';
-import { generateID } from '../../utils';
+import { generarIdProduct } from '../../utils';
 import fs from 'fs';
 
 export default function postProduct(req: Request, res: Response) {
@@ -11,9 +11,9 @@ export default function postProduct(req: Request, res: Response) {
 		img,
 		description,
 		stock,
-		id: generateID(),
+		id: generarIdProduct(),
 		timestamp: new Date().toLocaleString('es-AR'),
-		code: generateID(),
+		code: generarIdProduct(),
 	};
 	try {
 		const products = JSON.parse(
