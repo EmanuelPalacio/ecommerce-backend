@@ -1,8 +1,11 @@
 import { Request, Response } from 'express';
-import { products } from '../../utils/mockups/products';
+import fs from 'fs';
 
 export default function getProducts(_req: Request, res: Response) {
-	/* let status;
+	const products = JSON.parse(
+		fs.readFileSync('src/utils/mockups/mockProducts.JSON', 'utf-8'),
+	);
+	let status;
 	let response;
 	if (products.length === 0) {
 		status = 404;
@@ -12,6 +15,6 @@ export default function getProducts(_req: Request, res: Response) {
 	} else {
 		status = 200;
 		response = products;
-	} */
-	res.status(200).json({ products });
+	}
+	res.status(status).json({ response });
 }
