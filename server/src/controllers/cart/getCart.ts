@@ -3,8 +3,10 @@ import fs from 'fs';
 
 export default function getCart(req: Request, res: Response) {
 	try {
-		const { id } = req.body;
-		const parseCart = JSON.parse(fs.readFileSync(id, 'utf-8'));
+		const { id } = req.params;
+		const parseCart = JSON.parse(
+			fs.readFileSync(`src/utils/mockups/carts/${id}.JSON`, 'utf-8'),
+		);
 		res.status(200).json({ parseCart });
 	} catch (error) {
 		console.log(error);

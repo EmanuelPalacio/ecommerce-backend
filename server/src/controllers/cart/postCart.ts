@@ -12,7 +12,7 @@ export default function postCart(_req: Request, res: Response) {
 			products: [],
 		};
 		fs.writeFileSync(
-			`src/utils/mockups/carts/${idCart}`,
+			`src/utils/mockups/carts/${idCart}.JSON`,
 			JSON.stringify(newCart, null, 2),
 		);
 		res.status(200).json({ newCart });
