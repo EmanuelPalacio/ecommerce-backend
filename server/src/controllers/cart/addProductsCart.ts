@@ -13,16 +13,28 @@ export default function addProductsCart(req: Request, res: Response) {
 			fs.readFileSync('src/utils/mockups/mockProducts.JSON', 'utf-8'),
 		);
 		newProducts.forEach((addProduct: any) => {
-			const searchProducts = listProducts.find((product: Product) => {
-				return product.id === addProduct.id;
-			});
-			parseCart.products.push(searchProducts);
+			const verifyExistence = parseCart.products.some(
+				(elem: Product) => elem.id === addProduct.id,
+			);
+			if (verifyExistence) {
+				//realizar logica de duplicados
+			} else {
+				const searchProducts = listProducts.find((product: Product) => {
+					return product.id === addProduct.id;
+				});
+
+				parseCart.products.push(searchProducts);
+			}
 		});
 		fs.writeFileSync(
 			`src/utils/mockups/carts/${id}.JSON`,
 			JSON.stringify(parseCart, null, 2),
 		);
-		res.status(200).json({ parseCart, newProducts });
+		res.status(200).json({
+			ok: true,
+			msg: 'Productos agregados con exito',
+			cart: parseCart,
+		});
 	} catch (error) {
 		console.log(error);
 		res.status(404).json({
