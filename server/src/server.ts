@@ -5,9 +5,11 @@ import { portDev, portTest } from './config';
 import { router } from './routes';
 /* import { fileURLToPath } from 'url';
 import { dirname } from 'path'; */
+/* import path from 'path'; */
 
 dotenv.config();
 
+/* const dirname = path.resolve(); */
 /* export const __dirname = dirname(fileURLToPath(import.meta.url)); */
 /* const db = process.env.NODE_ENV === 'development' ? dbDev : dbTest; */
 const port = process.env.NODE_ENV === 'development' ? portDev : portTest;
