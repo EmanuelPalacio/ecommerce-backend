@@ -4,7 +4,7 @@ export interface Product {
 	img: string;
 	description: string;
 	stock: number;
-	id: string;
 	timestamp: string;
 	code: string;
+	_id?: string;
 }

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { Product } from '../../interfaces';
+import createProductService from '../../service/products/createProductService';
 import { generarIdProduct } from '../../utils';
-import fs from 'fs';
 
-export default function postProduct(req: Request, res: Response) {
+export default async function postProduct(req: Request, res: Response) {
 	const { name, price, img, description, stock } = req.body;
 	const data: Product = {
 		name,
@@ -11,25 +11,13 @@ export default function postProduct(req: Request, res: Response) {
 		img,
 		description,
 		stock,
-		id: generarIdProduct(),
 		timestamp: new Date().toLocaleString('es-AR'),
 		code: generarIdProduct(),
 	};
 	try {
-		const products = JSON.parse(
-			fs.readFileSync('src/utils/mockups/mockProducts.JSON', 'utf-8'),
-		);
-		products.push(data);
-		fs.writeFileSync(
-			'src/utils/mockups/mockProducts.JSON',
-			JSON.stringify(products, null, 2),
-		);
-
-		res.status(200).json({
-			ok: true,
-			msg: 'producto cargado con exíto',
-			response: data,
-		});
+		const recoveredProduct = await createProductService(data);
+		const { status } = recoveredProduct;
+		res.status(status).json(recoveredProduct);
 	} catch (error) {
 		console.log(error);
 		res.status(404).json({ error });

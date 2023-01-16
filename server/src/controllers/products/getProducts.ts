@@ -1,23 +1,11 @@
 import { Request, Response } from 'express';
-import fs from 'fs';
+import findProductService from '../../service/products/findProductService';
 
-export default function getProducts(_req: Request, res: Response) {
+export default async function getProducts(_req: Request, res: Response) {
 	try {
-		const products = JSON.parse(
-			fs.readFileSync('src/utils/mockups/mockProducts.JSON', 'utf-8'),
-		);
-		let status;
-		let response;
-		if (products.length === 0) {
-			status = 404;
-			response = {
-				msg: 'No hay productos cargados',
-			};
-		} else {
-			status = 200;
-			response = products;
-		}
-		res.status(status).json({ response });
+		const recoveredProduct = await findProductService();
+		const { status } = recoveredProduct;
+		res.status(status).json({ recoveredProduct });
 	} catch (error) {
 		console.log(error);
 	}
